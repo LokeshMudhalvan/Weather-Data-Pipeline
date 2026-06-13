@@ -1,0 +1,31 @@
+---
+services:
+  pipeline:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "5223:5223"
+    depends_on:
+      - postgres
+    networks:
+      - etl-network
+  postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: $DB_USERNAME
+      POSTGRES_PASSWORD: $DB_PASSWORD
+      POSTGRES_DB: $DB_NAME
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "$DB_PORT:$DB_PORT"
+    networks:
+      - etl-network
+
+volumes:
+  postgres_data:
+
+networks:
+  etl-network:
+    driver: bridge
