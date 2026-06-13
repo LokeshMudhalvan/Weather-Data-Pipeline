@@ -18,7 +18,6 @@ def main():
     host = os.getenv("DB_HOST", "localhost")
     table_name = os.getenv("TABLE_NAME")
 
-    # TODO: Connect to db only after db is completely initalized. Not just after the postgres container starts
     conn = connect_to_db(db_name, username, password, host, port)
 
     if conn is None:
